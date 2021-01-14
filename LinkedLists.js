@@ -1,53 +1,32 @@
 const prompt = require("prompt-sync")({ sigint: true });
 
 class Node {
-    constructor(age, highlight, next = null) {
-      this.age = age;
-      this.highlight = highlight;
-      this.next = next;
-    }
+  constructor(age, highlight, next = null) {
+    this.age = age;
+    this.highlight = highlight;
+    this.next = next;
+  }
 }
-  
+
 class LinkedList {
-    constructor(age, highlight) {
-      this.head = new Node(age, highlight);
-}
-  
-insertBeginning = (age, highlight) => {
+  constructor(age, highlight) {
+    this.head = new Node(age, highlight);
+  }
+
+  insertBeginning = (age, highlight) => {
     const newNode = new Node(age, highlight, this.head);
     this.head = newNode;
-};
-  
-traverse = () => {
+  };
+
+  traverse = () => {
     let current = this.head;
     while (current) {
       console.log(`Age: ${current.age}, highlight: ${current.highlight}`);
       current = current.next;
     }
-};
-  
-remove = (data) => {
-      let current = this.head;
-      if (current.data === data) {
-        // Deleting node at the beginning
-        this.head = current.next;
-      } else {
-        // Deleting node NOT in the beginning
-        while (current) {
-          let nextNode = current.next;
-          if (nextNode.data === data) {
-            // node found
-            current.next = nextNode.next;
-            current = null;
-          } else {
-            // node not found
-            current = nextNode;
-          }
-        }
-      }
-    };
-}
-insertHighlights = (age) => {
+  };
+
+  insertHighlights = (age) => {
     let current = this.head;
     while (current.age < age) {
       let currentAge = current.age + 1;
@@ -60,13 +39,14 @@ insertHighlights = (age) => {
         current = newNode;
       }
     }
-};
+  };
+}
 
-const hamza = new LinkedList(7, "I got shorts");
-hamza.insertBeginning(3, "I walked");
-hamza.insertBeginning(1, "I crawled");
-hamza.traverse();
+const life = new LinkedList(7, "I got fish");
+life.insertBeginning(3, "I losst");
+life.insertBeginning(1, "I cray");
+life.traverse();
 
 const age = prompt("How old are you?");
-hamza.insertHighlights(age);
-hamza.traverse();
+life.insertHighlights(age);
+life.traverse();
