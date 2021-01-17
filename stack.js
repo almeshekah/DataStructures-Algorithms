@@ -100,7 +100,7 @@ console.log(`First card in deck: ${deck.peek()}`);
 
 
 
-
+console.log(deck);
 
 
 
