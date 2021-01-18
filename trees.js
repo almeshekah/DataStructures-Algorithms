@@ -1,13 +1,21 @@
 const prompt = require("prompt-sync")({ sigint: true });
 class TreeNode {
-    constructor(data) {
-      this.data = data;
+    constructor(name) {
+      this.name  = name;
       this.children = [];
     }
   
     addChild = (node) => {
-        if(this.children.length<=2)
-      this.children.push(node);
+        if(this.children.length<2){
+          this.children.push(node);
+          console.log(`${node.name}child  of ${this.name}`  )
+        }else console.log("child is an orphan ")
+    };
+
+    getchildWithName = (name) =>{
+        return this.children.find((child) => child.name ===name);
+
+
     };
   
     removeChild = (node) => {
@@ -23,34 +31,51 @@ class TreeNode {
         console.log(current.data);
         nodes = [...nodes, ...current.children];
       }
-    };
+ };
 }
+
 function countWords(str) {
     str = str.replace(/(^\s*)|(\s*$)/gi,"");
     str = str.replace(/[ ]{2,}/gi," ");
     str = str.replace(/\n /,"\n");
     return str.split(' ').length;
 }
-let name = prompt("enter child full name (done if finished)");
+const root = new TreeNode("Family");
+let fullName = prompt("enter child full name (done if finished)");
+
 do{
-let name = prompt("enter child full name (done if finished)");
-if(countWords(name)===2){
-    const family1 = new TreeNode(name);
-}else if (countWords(name)===3){
-    let ver =new TreeNode(name.split(" ", 1));
-    let bad = name.split(" ", 2);
-    bad.addChild(ver);
-}else if (countWords(name)===4){
-    let ver =new TreeNode(name.split(" ", 3));
-    let bad = name.split(" ", 2);
-    bad.addChild(ver);
+    let current =root;
+    let names = fullName.split(" ").reverse();
+    let fristName = names.pop();
+    let lastName = names.shift();
+    if(lastName === current.name){
+        if(names){
+            names.forEach((name) => {
+                let child = current.getchildWithName(name);
+                if(child){
+                    current=child;
+                }else{
+                    let newNode =new TreeNode(name);
+                    current.addChild(newNode);
+                    current = newNode;
+                }
+              });
 
-}
+            
+
+        }
+        let newNode = new TreeNode (fristName);
+        current.addChild(newNode);
 
 
-}while(countWords(name)===1);
+    }
+    console.log ("-------------------------------------------");
+    fullName = prompt("enter child full name (done if finished)");
 
-console.log(family1); 
+
+}while(fullName !== "done");
+
+root .traverse(); 
 
 
 
