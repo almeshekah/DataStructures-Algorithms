@@ -13,11 +13,9 @@ class TreeNode {
     };
 
     getchildWithName = (name) =>{
-        return this.children.find((child) => child.name ===name);
-
-
+        return this.children.forEach((child) => child.name ===name)};
     };
-  
+
     removeChild = (node) => {
       this.children = this.children.filter((child) => child !== node);
     };
@@ -32,7 +30,7 @@ class TreeNode {
         nodes = [...nodes, ...current.children];
       }
  };
-}
+
 
 function countWords(str) {
     str = str.replace(/(^\s*)|(\s*$)/gi,"");
@@ -44,25 +42,23 @@ const root = new TreeNode("Family");
 let fullName = prompt("enter child full name (done if finished)");
 
 do{
-    let current =root;
-    let names = fullName.split(" ").reverse();
-    let fristName = names.pop();
-    let lastName = names.shift();
-    if(lastName === current.name){
-        if(names){
-            names.forEach((name) => {
-                let child = current.getchildWithName(name);
-                if(child){
-                    current=child;
+  let current =root;
+  let names = fullName.split(" ").reverse();
+  let fristName = names.pop();
+  let lastName = names.shift();
+
+  if(lastName === current.name){
+    if(names){
+      names.forEach((name) => {
+        let child = current.getchildWithName(name);
+            if(child){
+                current=child;
                 }else{
                     let newNode =new TreeNode(name);
                     current.addChild(newNode);
                     current = newNode;
                 }
               });
-
-            
-
         }
         let newNode = new TreeNode (fristName);
         current.addChild(newNode);
@@ -75,7 +71,8 @@ do{
 
 }while(fullName !== "done");
 
-root .traverse(); 
+
+
 
 
 
